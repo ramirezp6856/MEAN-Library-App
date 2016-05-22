@@ -4,8 +4,8 @@ var sql = require('mssql');
 
 var config = {
     user: 'ewok',
-    password: 'ewok',
-    server: '172.20.0.173',
+    password: '',
+    server: '',
     database: 'Books',
     options: {
     instancename: 'SQLEXPRESS'
