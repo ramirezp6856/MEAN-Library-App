@@ -1,9 +1,11 @@
 var express = require('express');
 var bookRouter = express.Router();
-var sql = require('mssql');
+var mongodb = require('mongodb').MongoClient;
+
+/*var sql = require('mssql');*/
 
 var router = function (nav) {
-    var books = [
+    /*var books = [
         {
             title: 'War and Peace',
             genre: 'Historical Fiction',
@@ -40,26 +42,40 @@ var router = function (nav) {
             author: 'Jessica Holiday',
             read: false
     }
-];
+];*/
 
     bookRouter.route('/')
-        /* .get(function (req, res) {
-             console.log('book router');
-             var request = new sql.Request();
-             request.query('select * from books',
-                 function (err, recordset) {
-                     res.render('bookListView', {
-                         title: 'Hello from render',
-                         nav: nav,
-                         books: recordset
-                     });
+        //MongoDB QUERY
+        .get(function (req, res) {
 
-                 }); */
-        /*.catch(function (err) {
-                console.log('sql err' + err);
-               });*/
-        //});
+            var url = 'mongodb://localhost:27017/libraryApp';
+            mongodb.connect(url, function (err, db) {
+                var collection = db.collection('books');
+                collection.find({}).toArray(
+                    function (err, results) {
+                        res.render('bookListView', {
+                            title: 'Hello from render',
+                            nav: nav,
+                            books: results
+                        });
+                    });
+            });
 
+            /*
+            //SQLEXPRESS QUERY
+            console.log('book router');
+            var request = new sql.Request();
+            request.query('select * from books',
+                function (err, recordset) {
+                    res.render('bookListView', {
+                            title: 'Hello from render',
+                            nav: nav,
+                            books: recordset
+                });*/
+        });
+
+    /*
+    //SQLEXPRESS QUERY
     .get(function (req, res) {
         console.log('book router');
         var request = new sql.Request();
@@ -77,6 +93,7 @@ var router = function (nav) {
                 console.log(`sql err ${err}`);
             });
     });
+    */
 
     bookRouter.route('/:id')
         .all(function (req, res, next) {
@@ -98,13 +115,13 @@ var router = function (nav) {
                         });
                 });
         })
-    .get(function (req, res) {
-        res.render('bookView', {
-            title: 'Books',
-            nav: nav,
-            book: req.book
+        .get(function (req, res) {
+            res.render('bookView', {
+                title: 'Books',
+                nav: nav,
+                book: req.book
+            });
         });
-    });
     return bookRouter;
 };
 module.exports = router;
