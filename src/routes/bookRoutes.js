@@ -1,6 +1,7 @@
 var express = require('express');
 var bookRouter = express.Router();
 var mongodb = require('mongodb').MongoClient;
+var ObjectId = require('mongodb').ObjectID;
 
 /*var sql = require('mssql');*/
 
@@ -96,32 +97,56 @@ var router = function (nav) {
     */
 
     bookRouter.route('/:id')
-        .all(function (req, res, next) {
-            var id = req.params.id;
-            var ps = new sql.PreparedStatement();
-            ps.input('id', sql.Int)
-            ps.prepare('select * from books where id = @id',
-                function (err) {
-                    ps.execute({
-                            id: req.params.id
-                        },
-                        function (err, recordset) {
-                            if (recordset.length === 0) {
-                                res.status(404).send('Not Found')
-                            } else {
-                                req.book = recordset[0];
-                                next();
-                            }
-                        });
-                });
-        })
+        // MongoDB QUERY
         .get(function (req, res) {
-            res.render('bookView', {
-                title: 'Books',
-                nav: nav,
-                book: req.book
+
+            var id = new ObjectId(req.params.id);
+            var url = 'mongodb://localhost:27017/libraryApp';
+
+            mongodb.connect(url, function (err, db) {
+                var collection = db.collection('books');
+
+                collection.findOne({
+                        _id: id
+                    },
+                    function (err, results) {
+                        res.render('bookView', {
+                            title: 'Books',
+                            nav: nav,
+                            book: results
+                        });
+                    });
             });
+
         });
+
+    // SQLEXPRESS QUERY
+    /*.all(function (req, res, next) {
+        var id = req.params.id;
+        var ps = new sql.PreparedStatement();
+        ps.input('id', sql.Int)
+        ps.prepare('select * from books where id = @id',
+            function (err) {
+                ps.execute({
+                        id: req.params.id
+                    },
+                    function (err, recordset) {
+                        if (recordset.length === 0) {
+                            res.status(404).send('Not Found')
+                        } else {
+                            req.book = recordset[0];
+                            next();
+                        }
+                    });
+            });
+    })
+    .get(function (req, res) {
+        res.render('bookView', {
+            title: 'Books',
+            nav: nav,
+            book: req.book
+        });
+    });*/
     return bookRouter;
 };
 module.exports = router;
