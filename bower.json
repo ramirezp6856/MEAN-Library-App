@@ -1,41 +1,48 @@
 {
-  "name": "library",
-  "description": "",
-  "main": "app.js",
-  "license": "ISC",
-  "homepage": "",
-  "private": true,
-  "ignore": [
+    "name": "library",
+    "description": "",
+    "main": "app.js",
+    "license": "ISC",
+    "homepage": "",
+    "private": true,
+    "ignore": [
     "**/.*",
     "node_modules",
     "bower_components",
     "test",
     "tests"
   ],
-  "dependencies": {
-    "bootstrap": "~3.3.6",
-    "font-awesome": "~4.6.3",
-    "d3": "^3.5.17"
-  },
-  "overrides": {
-    "bootstrap": {
-      "main": [
+    "dependencies": {
+        "bootstrap": "~3.3.6",
+        "font-awesome": "~4.6.3",
+        "d3": "^3.5.17",
+        "formatter.js": "formatter#^0.1.5"
+    },
+    "overrides": {
+        "bootstrap": {
+            "main": [
         "dist/js/bootstrap.js",
         "dist/css/bootstrap.min.css",
         "less/bootstrap.less"
       ]
-    },
-    "font-awesome": {
-      "main": [
+        },
+        "font-awesome": {
+            "main": [
         "less/font-awesome.less",
         "css/font-awesome.min.css",
         "scss/font-awesome.scss"
       ]
-    },
-      "d3": {
-      "main": [
+        },
+        "d3": {
+            "main": [
         "d3.min.js"
       ]
-  }
-  }
+        },
+        "formatter.js": {
+            "main": [
+        "dist/formatter.min.js",
+        "dist/jquery.formatter.min.js"
+        ]
+        }
+    }
 }

@@ -15,6 +15,8 @@
     <script src="/lib/jquery/dist/jquery.js"></script>
     <script src="/lib/bootstrap/dist/js/bootstrap.js"></script>
     <script src="/lib/d3/d3.min.js"></script>
+    <script src="/lib/formatter.js/dist/formatter.min.js"></script>
+    <script src="/lib/formatter.js/dist/jquery.formatter.min.js"></script>
     <!-- endbower -->
     <!-- inject:css -->
     <link rel="stylesheet" href="/css/styles.css">
@@ -45,7 +47,9 @@
 
                     <% for(var i=0; i<nav.length;i++){%>
                         <li>
-                            <a href="<%=nav[i].Link%>"><%=nav[i].Text%></a>
+                            <a href="<%=nav[i].Link%>">
+                                <%=nav[i].Text%>
+                            </a>
                         </li>
                         <%}%>
 
@@ -108,31 +112,41 @@
                     <div class="panel-body">
                         <!--/stories-->
                         <% for(var i=0; i<books.length;i++){%>
-                        <div class="row">
-                            <br>
-                            <div class="col-md-2 col-sm-3 text-center">
-                                <a class="story-title" href="#"><img alt="" src="http://api.randomuser.me/portraits/thumb/men/58.jpg" style="width:100px;height:100px" class="img-circle"></a>
-                            </div>
-                            <div class="col-md-10 col-sm-9">
-                                <h3><%=books[i].title%></h3>
-                                <div class="row">
-                                    <div class="col-xs-9">
-                                        <h4><span class="label label-default"><%=books[i].author%></span></h4>
-                                        <h4>
-                  <small style="font-family:courier,'new courier';" class="text-muted"> <a href="/books/<%=books[i]._id%>" class="text-muted">Read More</a></small>
-                  </h4></div>
-                                    <div class="col-xs-3"></div>
+                            <div class="row">
+                                <br>
+                                <div class="col-md-2 col-sm-3 text-center">
+                                    <a class="story-title" href="#"><img alt="" src="http://api.randomuser.me/portraits/thumb/men/58.jpg" style="width:100px;height:100px" class="img-circle"></a>
                                 </div>
-                                <br>
-                                <br>
+                                <div class="col-md-10 col-sm-9">
+                                    <h3><%=books[i].title%></h3>
+                                    <div class="row">
+                                        <div class="col-xs-9">
+                                            <h4><span class="label label-default"><%=books[i].author%></span></h4>
+                                            <h4>
+                  <small style="font-family:courier,'new courier';" class="text-muted"> 
+                      
+                      <!-- MongoDB -->
+                      <a href="/books/<%=books[i]._id%>" class="text-muted">Read More</a>
+                    
+                      <!-- SQLEXPRESS -->
+                      <!--
+                      <a href="/books/< %=books[i].id%>" class="text-muted">Read More</a>
+                      -->
+                 </small>
+                                            
+                  </h4></div>
+                                        <div class="col-xs-3"></div>
+                                    </div>
+                                    <br>
+                                    <br>
+                                </div>
                             </div>
-                        </div>
-                        <hr>
-                        <%}%>
-                        <!--/stories-->
+                            <hr>
+                            <%}%>
+                                <!--/stories-->
 
 
-                        <a href="/" class="btn btn-primary pull-right btnNext">More <i class="glyphicon glyphicon-chevron-right"></i></a>
+                                <a href="/" class="btn btn-primary pull-right btnNext">More <i class="glyphicon glyphicon-chevron-right"></i></a>
 
 
                     </div>
